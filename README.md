@@ -49,10 +49,17 @@ Argo CD continuously monitor the configurations stored in the Git repository and
     $ git clone https://github.com/siamaksade/openshift-cicd-demo
     $ demo.sh install
     ```
-2. Add the quay secret to the pipeline serviceaccount in the demo-cicd namespace
+2. Create a Secret with your Quay.io credentials with the encrypted password
    ```text
-   oc create secret docker-registry quay-secret --docker-server=quay.io --docker-username=<QUAY_USERNAME> --docker-password=<ENCRYPTED_PASSWORD>
+   oc create secret docker-registry quay-secret -n demo-cicd --docker-server=quay.io --docker-username=<QUAY_USERNAME> --docker-password=<ENCRYPTED_PASSWORD> 
    ```
+   
+3. Link the Quay Secret to pipeline Service Account.
+NOTE: Pipelines Operator installs by default a pipeline Service Account in all projects. This service account is used to run non-privileged containers and builds across the cluster.
+   ```text
+   oc secret link pipeline quay-secret -n demo-cicd
+   ```
+
 ## Demo Instructions
 
 1. Go to spring-petclinic Git repository in Gitea
