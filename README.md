@@ -55,6 +55,7 @@ Argo CD continuously monitor the configurations stored in the Git repository and
    ```
    
 3. Link the Quay Secret to pipeline Service Account.
+
 NOTE: Pipelines Operator installs by default a pipeline Service Account in all projects. This service account is used to run non-privileged containers and builds across the cluster.
    ```text
    oc secret link pipeline quay-secret -n demo-cicd
